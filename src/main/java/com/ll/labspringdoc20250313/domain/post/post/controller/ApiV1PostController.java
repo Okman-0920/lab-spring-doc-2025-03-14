@@ -22,6 +22,9 @@ import com.ll.labspringdoc20250313.global.rq.Rq;
 import com.ll.labspringdoc20250313.global.rsData.RsData;
 import com.ll.labspringdoc20250313.standard.page.dto.PageDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
+@Tag(name = "ApiV1PostController", description = "API 글 컨트롤러")
+@SecurityRequirement(name = "bearerAuth")
 public class ApiV1PostController {
     private final PostService postService;
     private final Rq rq;
@@ -42,6 +47,7 @@ public class ApiV1PostController {
 
     @GetMapping("/statistics")
     @Transactional(readOnly = true)
+    @Operation(summary = "통계 정보")
     public PostStatisticResBody statistics() {
         Member actor = rq.getActor();
 
@@ -54,6 +60,7 @@ public class ApiV1PostController {
     // 내글 다건 조회
     @GetMapping("/mine")
     @Transactional(readOnly = true)
+    @Operation(summary = "내 글 다건조회")
     public PageDto<PostDto> mine(
             @RequestParam(defaultValue = "title") String searchKeywordType,
             @RequestParam(defaultValue = "") String searchKeyword,
@@ -72,6 +79,7 @@ public class ApiV1PostController {
     // 다건 조회
     @GetMapping
     @Transactional(readOnly = true)
+    @Operation(summary = "공개글 다건 조회")
     public PageDto<PostDto> items(
             @RequestParam(defaultValue = "title") String searchKeywordType,
             @RequestParam(defaultValue = "") String searchKeyword,
@@ -87,6 +95,7 @@ public class ApiV1PostController {
     // 단건 조회
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @Operation(summary = "글 단건 조회")
     public PostWithContentDto item(@PathVariable long id) {
         Post post = postService.findById(id).get();
 

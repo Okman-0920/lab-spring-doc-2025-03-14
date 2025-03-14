@@ -11,10 +11,15 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "API서버", version = "v1"))
-@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
+@SecurityScheme(
+	name = "bearerAuth",
+	type = SecuritySchemeType.HTTP,
+	bearerFormat = "JWT",
+	scheme = "bearer"
+)
 public class SpringDocConfig {
 	@Bean
-	public GroupedOpenApi groupApiV1() {
+	public GroupedOpenApi membersApiV1() {
 		return GroupedOpenApi.builder()
 			.group("apiV1")
 			.pathsToMatch("/api/v1/**")

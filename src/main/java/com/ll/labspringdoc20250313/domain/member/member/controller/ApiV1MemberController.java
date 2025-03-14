@@ -18,6 +18,7 @@ import com.ll.labspringdoc20250313.global.exceptions.ServiceException;
 import com.ll.labspringdoc20250313.global.rq.Rq;
 import com.ll.labspringdoc20250313.global.rsData.RsData;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class ApiV1MemberController {
     private final MemberService memberService;
     private final Rq rq;
@@ -79,7 +81,9 @@ public class ApiV1MemberController {
 
         String accessToken = memberService.genAccessToken(member);
 
-        rq.setHeader("accessToken", accessToken);
+        rq.setHeader("Authorization", "Bearer " + member.getApiKey() + " " + accessToken);
+
+        rq.setCookie("accessToken", accessToken);
         rq.setCookie("apiKey", member.getApiKey());
 
 

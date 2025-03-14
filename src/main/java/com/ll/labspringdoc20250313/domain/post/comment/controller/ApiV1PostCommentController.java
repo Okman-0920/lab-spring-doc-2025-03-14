@@ -22,6 +22,7 @@ import com.ll.labspringdoc20250313.global.exceptions.ServiceException;
 import com.ll.labspringdoc20250313.global.rq.Rq;
 import com.ll.labspringdoc20250313.global.rsData.RsData;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/posts/{postId}/comments")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class ApiV1PostCommentController {
     private final PostService postService;
     private final Rq rq;
